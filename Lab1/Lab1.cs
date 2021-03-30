@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 using System.Diagnostics;
 namespace Lab1_DSaPM
 {
-    class Program
+    class Lab1
     {  
         static void Main(string[] args)
         {
