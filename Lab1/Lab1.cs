@@ -4,11 +4,11 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Diagnostics;
-namespace Lab1_DSaPM
+namespace Lab_number
 {
-    class Lab1
-    {  
-        static void Main(string[] args)
+    static class Lab1
+    {
+        public static void Start_Lab1()
         {
             while (true)
             {
