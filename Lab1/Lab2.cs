@@ -76,22 +76,34 @@ namespace Lab_number
 
 
                 SimpleHash hash = new SimpleHash(new int[] { 8, 6, 10, 9, 11, 7, 14, 19, 61, 24, 1 });
-                Console.WriteLine(hash.Search(24));
-                Console.WriteLine(hash.Search(10));
+                Console.WriteLine('\n' + "ПРОСТОЕ ХЕШИРОВАНИЕ" + '\n' + "Число находится в таблице на позиции " + hash.Search(24));
+                Console.WriteLine("Число находится в таблице на позиции " + hash.Search(10));
+                time.Start();
                 hash.Delete(10);
-                Console.WriteLine(hash.Search(10));
+                Console.WriteLine("Число находится в таблице на позиции " + hash.Search(10));
+                time.Stop();
+                Console.WriteLine("Затраченное время на удаление и поиск числа = " + time.Elapsed);
+                time.Reset();
 
                 RandHash randhash = new RandHash(new int[] { 8, 6, 10, 9, 11, 7, 14, 19, 61, 24, 1 });
-                Console.WriteLine(randhash.Search(20));
-                Console.WriteLine(randhash.Search(10));
+                Console.WriteLine('\n' + "РАНДОМНОЕ ХЕШИРОВАНИЕ" + '\n' + "Число находится в таблице на позиции " + randhash.Search(20));
+                Console.WriteLine("Число находится в таблице на позиции " + randhash.Search(10));
+                time.Start();
                 randhash.Delete(10);
-                Console.WriteLine(randhash.Search(10));
+                Console.WriteLine("Число находится в таблице на позиции " + randhash.Search(10));
+                time.Stop();
+                Console.WriteLine("Затраченное время на удаление и поиск числа = " + time.Elapsed);
+                time.Reset();
 
                 ChainHash chainhash = new ChainHash(new int[] { 8, 6, 10, 9, 11, 7, 14, 19, 61, 24, 1 });
-                Console.WriteLine(chainhash.HasValue(20));
-                Console.WriteLine(chainhash.HasValue(10));
+                Console.WriteLine('\n' + "МЕТОД ЦЕПОЧЕК" + '\n' + "Число есть в таблице - " + chainhash.HasValue(20));
+                Console.WriteLine("Число есть в таблице - " + chainhash.HasValue(10));
+                time.Start();
                 chainhash.Delete(10);
-                Console.WriteLine(chainhash.HasValue(10));
+                Console.WriteLine("Число есть в таблице - " + chainhash.HasValue(10));
+                time.Stop();
+                Console.WriteLine("Затраченное время на удаление и поиск числа = " + time.Elapsed);
+                time.Reset();
 
                 Console.WriteLine("Нажмите любую кнопку для повторения");
                 Console.ReadLine();
