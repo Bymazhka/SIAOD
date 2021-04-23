@@ -62,12 +62,36 @@ namespace Lab_number
 
                 BinaryTree tree = new BinaryTree(new int[] { 8, 6, 10, 9, 11, 7 });
                 tree.Add(6);
-                Console.WriteLine(tree.Contains(6));
-                //tree.Contains(23);
+                time.Start();
+                Console.WriteLine('\n' + "ДЕРЕВО" + '\n' + "Число добавлено в дерево " + tree.Contains(6));
+                time.Stop();
+                Console.WriteLine("Время выполнения на поиск - " + time.Elapsed);
+                time.Reset();
+                time.Start();
                 tree.Delete(6);
-                Console.WriteLine(tree.Contains(6));
+                time.Stop();
+                Console.WriteLine("Число содержится в дереве после удаления " + tree.Contains(6));
+                Console.WriteLine("Время выполнения на удаление - " + time.Elapsed);
+                time.Reset();
 
-                SimpleHash hash = new SimpleHash(new int[] { 8, 6, 10, 9, 11, 7 });
+
+                SimpleHash hash = new SimpleHash(new int[] { 8, 6, 10, 9, 11, 7, 14, 19, 61, 24, 1 });
+                Console.WriteLine(hash.Search(24));
+                Console.WriteLine(hash.Search(10));
+                hash.Delete(10);
+                Console.WriteLine(hash.Search(10));
+
+                RandHash randhash = new RandHash(new int[] { 8, 6, 10, 9, 11, 7, 14, 19, 61, 24, 1 });
+                Console.WriteLine(randhash.Search(20));
+                Console.WriteLine(randhash.Search(10));
+                randhash.Delete(10);
+                Console.WriteLine(randhash.Search(10));
+
+                ChainHash chainhash = new ChainHash(new int[] { 8, 6, 10, 9, 11, 7, 14, 19, 61, 24, 1 });
+                Console.WriteLine(chainhash.HasValue(20));
+                Console.WriteLine(chainhash.HasValue(10));
+                chainhash.Delete(10);
+                Console.WriteLine(chainhash.HasValue(10));
 
                 Console.WriteLine("Нажмите любую кнопку для повторения");
                 Console.ReadLine();
@@ -107,6 +131,9 @@ namespace Lab_number
         }
         public static int Fibonaccian(int[] arr, int x)
         {
+            /* В этом поиске анализируются элементы, находящиеся в позициях, 
+             * равных числам Фибоначчи. Числа Фибоначчи получаются по следующему 
+             * правилу: последующее число равно сумме двух предыдущих чисел */
             int n = arr.Length;
             int fib2 = 0;
             int fib1 = 1;
@@ -397,7 +424,7 @@ namespace Lab_number
                     AddItem(item);
                 }
             }
-            void Delete(int item)
+            public void Delete(int item)
             {
 
                 if (HasValue(item))
@@ -426,12 +453,10 @@ namespace Lab_number
                     links[index].Add(item);
                 }
             }
-int Hash(int item)
-        {
-            return Math.Abs(item % links.Length);
+            int Hash(int item)
+            {
+                return Math.Abs(item % links.Length);
+            }
         }
-        }
-
-        
     }
 }
