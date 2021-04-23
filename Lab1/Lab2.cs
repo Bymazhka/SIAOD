@@ -342,7 +342,7 @@ namespace Lab_number
                     }
                     else
                     {
-                        i++;
+                        i++; 
                     }
                 }
             }
