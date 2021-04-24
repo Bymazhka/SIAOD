@@ -18,7 +18,7 @@ namespace Lab_number
                     Triangle(tr2) + '\n' + Triangle(tr3));
 
                 int[] max = {3, 30, 34, 5, 9};
-                int[] max1 = {10, 2};
+                int[] max1 = {34323, 3432};
                 int[] max2 = {1};
                 int[] max3 = {10};
                 Console.WriteLine("Наибольшие числа:" + '\n' + MaxNum(max) + '\n' + MaxNum(max1)

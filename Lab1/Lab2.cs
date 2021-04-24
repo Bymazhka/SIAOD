@@ -11,7 +11,7 @@ namespace Lab_number
         {
             while (true)
             {
-                Console.WriteLine("Введите число элементов массива");
+                /*Console.WriteLine("Введите число элементов массива");
                 int size = int.Parse(Console.ReadLine());
 
                 Stopwatch time = new Stopwatch();
@@ -104,12 +104,14 @@ namespace Lab_number
                 time.Stop();
                 Console.WriteLine("Затраченное время на удаление и поиск числа = " + time.Elapsed);
                 time.Reset();
-
+                */
+                Chess chess = new Chess();
+                chess.Place();
                 Console.WriteLine("Нажмите любую кнопку для повторения");
                 Console.ReadLine();
             }
         }
-        //Задания 1/3
+        //Задания 1.3
         static public int BinarySearch(int[] array, int search)
         {
             /*Двоичный поиск — классический алгоритм поиска элемента в отсортированном массиве, 
@@ -212,31 +214,32 @@ namespace Lab_number
             BinaryTree rightchild;
             BinaryTree leftchild;
             BinaryTree parent;
-            public BinaryTree(int[] mas)
+            public BinaryTree(int[] mas) //констурктор для массива
             {
-                value = mas[0];
+                value = mas[0]; //первый элемент
                 rightchild = null;
                 leftchild = null;
                 parent = null;
                 for (int i = 1; i < mas.Length; i++)
                 {
-                    Add(mas[i]);
+                    Add(mas[i]); //добавляем значения из массива в дерево
                 }
             }
-            public BinaryTree(int num)
+            public BinaryTree(int num) //конструктор для одиночного элемента
             {
-                value = num;
+                value = num; //текущий элемент
                 rightchild = null;
                 leftchild = null;
                 parent = null;
             }
             public void Add(int num)
             {
+                //temp - новый эл-т, this - вызывающий (второй)
                 BinaryTree temp = new BinaryTree(num);
                 if (temp.value > this.value && rightchild == null) //если идем вправо и никого нет, то привязываем
                 {
                     rightchild = temp;
-                    temp.parent = this;
+                    temp.parent = this; //запоминаем предудущего (родителя)
                 }
                 else if (temp.value > this.value && rightchild != null) //если больше и справа кто-то уже есть
                 {
@@ -270,15 +273,19 @@ namespace Lab_number
             }
             public void Delete(int num)
             {
+                /*
+                 * если элемент есть, создаем резервный массив элементами, идущими
+                 * от удаляемого по нисходящей, выпиливаем удаляемый и заново запиливаем эти элементы в дерево
+                 */
                 if (Contains(num))
                 {
                     List<int> childs = new List<int>();
                     BinaryTree deleted = GetNum(num); //временный 
-                    if (deleted.leftchild != null)
+                    if (deleted.leftchild != null) //если есть какие-то числа после удаляемого
                     {
-                        deleted.leftchild.FindChilds(childs);
+                        deleted.leftchild.FindChilds(childs); //ищем детей слева
                     }
-                    if (deleted.rightchild != null)
+                    if (deleted.rightchild != null) //если есть какие-то числа после удаляемого
                     {
                         deleted.rightchild.FindChilds(childs);
                     }
@@ -354,7 +361,7 @@ namespace Lab_number
                     }
                     else
                     {
-                        i++; 
+                        i++;
                     }
                 }
             }
@@ -365,7 +372,7 @@ namespace Lab_number
             public void Delete(int value)
             {
                 int i = 0;
-                if (Search(value) == -1) return; 
+                if (Search(value) == -1) return;
                 while (true)
                 {
                     int seat = (Math.Abs(value) + i) % table.Length;
@@ -468,6 +475,169 @@ namespace Lab_number
             int Hash(int item)
             {
                 return Math.Abs(item % links.Length);
+            }
+        }
+
+        //Задание 2
+        class Chess
+        {
+            /*
+             * создаем bool матрицу 8*8, она по умолчанию будет заполнена false 
+             * делаем метод, который будет расставлять фигуры 
+             * при расстановке после постановки одного ферзя, все значения в матрице, находящиеся по диагонали, вертикали и горизонтали
+             * будут принимать значение true 
+             * и ставим мы фигуры только туда, где есть значение false
+             * рандомно ставим по одной фигуре в столбец, если когда-то происходит коллизия, то все сбрасываем и начинаем с самого начала
+             */
+            bool[,] board;
+            char[,] b_out; //для вывода доски
+
+            public Chess()
+            {
+                board = new bool[8, 8];
+                b_out = new char[8, 8];
+                for (int i = 0; i < 8; i++)
+                {
+                    for (int j = 0; j < 8; j++)
+                    {
+                        b_out[i, j] = 'o';
+                    }
+                }
+            }
+            public void Place()
+            {
+                int counter = 0;
+                bool flag;
+                while (counter != 8) //пока не поставили все 8 ферзей
+                {
+                    FreeField(); //очищаем поле
+                    counter = 0;
+                    for (int i = 0; i < 8; i++) //цикл для 8 ферзей
+                    {
+                        flag = Rand_Queen(i); //если поставлена фигура
+                        if (!flag) //если не поставилась фигура
+                        {
+                            break; //то выходим
+                        }
+                        counter++;
+                    }
+                }
+                Print();
+            }
+            /// <summary>
+            /// Выводим результат в виде доски и закрашиваем ферзи красным цветом
+            /// </summary>
+            void Print() 
+            {
+                for (int i = 0; i < 8; i++)
+                {
+                    for (int j = 0; j < 8; j++)
+                    {
+                        if (b_out[i, j] == 'i')
+                        {
+                            Console.ForegroundColor = ConsoleColor.Red;
+                            Console.Write(b_out[i, j]);
+                            Console.ForegroundColor = ConsoleColor.White;
+                            Console.Write("|");
+                        }
+                        else
+                        {
+                            Console.Write(b_out[i, j] + "|");
+                        }
+                    }
+                Console.WriteLine();
+                }
+            }
+            /// <summary>
+            /// Ставит ферзя на какое-то определенное место
+            /// </summary>
+            /// <param name="col">столбец</param>
+            /// <returns></returns>
+            private bool Rand_Queen(int col)
+            {
+                Random rnd = new Random();
+                int row = rnd.Next(0, 8); //берём любую строчку 
+                int counter = 0;
+                while (counter != 8) //пока не было 8 попыток поставить фигуру
+                {
+                    if (!board[row, col]) //если клетка = false 
+                    {
+                        board[row, col] = true; //делаем ее true
+                        b_out[row, col] = 'i'; //на поле для вывода ставим "фигуру"
+                        FillDiags(row, col); //заполняем все идущие от нее диагонали,
+                        FillHorisVert(row, col); //вертигали и горизонтали значениями true
+                        return true;
+                    }
+                    row = rnd.Next(0, 8);
+                    counter++;
+                }
+                return false;
+            }
+            /// <summary>
+            /// Если не получилось поставить какого-то очередного ферзя, то возвращаемся в изначальное положение
+            /// </summary>
+            void FreeField()
+            {
+                for (int i = 0; i < 8; i++)
+                {
+                    for (int j = 0; j < 8; j++)
+                    {
+                        board[i, j] = false;
+                        b_out[i, j] = 'o';
+                    }
+                }
+            }
+            /// <summary>
+            /// заполняем горизонтали и вертикали относительно центра клетки
+            /// </summary>
+            /// <param name="row">строки</param>
+            /// <param name="col">столбцы</param>
+            void FillHorisVert(int row, int col)
+            {
+                for (int i = 0; i < 8; i++)
+                {
+                    board[i, col] = true;
+                    board[row, i] = true;
+                }
+            }
+            /// <summary>
+            /// заполняем 4 диагонали относительно центра клетки
+            /// </summary>
+            /// <param name="row">строки</param>
+            /// <param name="col">столбцы</param>
+            void FillDiags(int row, int col)
+            {
+                int row_now = row, col_now = col; 
+                while (row_now >= 0 && row_now < 8 && col_now >= 0 && col_now < 8)
+                {
+                    board[row_now, col_now] = true;
+                    --col_now;
+                    --row_now;
+                }
+                row_now = row;
+                col_now = col;
+                while (row_now >= 0 && row_now < 8 && col_now >= 0 && col_now < 8)
+                {
+                    board[row_now, col_now] = true;
+                    ++col_now;
+                    ++row_now;
+                }
+                row_now = row;
+                col_now = col;
+                while (row_now >= 0 && row_now < 8 && col_now >= 0 && col_now < 8)
+                {
+                    board[row_now, col_now] = true;
+                    ++row_now;
+                    --col_now;
+                }
+                row_now = row;
+                col_now = col;
+                while (row_now >= 0 && row_now < 8 && col_now >= 0 && col_now < 8)
+                {
+                    board[row_now, col_now] = true;
+                    --row_now;
+                    ++col_now;
+                }
             }
         }
     }
