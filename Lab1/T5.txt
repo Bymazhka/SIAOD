@@ -1,0 +1,19 @@
+﻿public static bool Task5(string[] text)
+        {
+            var deq = new Deque<char>();
+            foreach (var str in text)
+            {
+                foreach (var ch in str)
+                {
+                    if (ch == '[')
+                    {
+                        deq.AddFirst(ch);
+                    }
+                    if (ch == ']')
+                    {
+                        deq.AddLast(ch);
+                    }
+
+                }
+            }
+            [] [] ][][][[]]]][[]]

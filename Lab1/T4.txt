@@ -1,0 +1,18 @@
+﻿foreach (var str in text)
+            {
+                foreach (var ch in str)
+                {
+                    if (ch == '(')
+                    {
+                        stack.Enter(ch);
+                    }
+                    if (ch == ')' && stack.Count != 0)
+                    {
+                        stack.Take();
+                    }
+                    else if (ch == ')' && stack.Count == 0)
+                    {
+                        return false;
+                    }
+                }
+            }

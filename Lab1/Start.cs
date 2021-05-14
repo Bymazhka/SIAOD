@@ -4,6 +4,7 @@ using System.Text;
 using static Lab_number.Lab1;
 using static Lab_number.Lab2;
 using static Lab_number.Lab3;
+using static Lab_number.Lab4;
 using static Lab_number.problems;
 namespace Lab1
 {
@@ -12,7 +13,7 @@ namespace Lab1
         static void Main(string[] args)
         {
             Console.WriteLine("Номер лабораторной работы:\n1. Алгоритмы сортировки\n2. Методы поиска, хеширование, шахматы\n" +
-                "3. Задачи из файла problems\n" + "4. Методы поиска подстроки в строке\n");
+                "3. Задачи из файла problems\n" + "4. Методы поиска подстроки в строке, пятнашки\n" + "5. Реализация стека, дека\n");
             int num = int.Parse(Console.ReadLine());
             switch (num)
             {
@@ -27,6 +28,9 @@ namespace Lab1
                     break;
                 case 4:
                     Start_Lab3();
+                    break;
+                case 5:
+                    Start_Lab4();
                     break;
 
                 default:
